@@ -2,16 +2,16 @@
 from model.contact import Contact
 
 
-# def test_add_empty_contact(app):
-#     app.session.login(username="admin", password="secret")
-#     app.contact.create(Contact(first_name='', middle_name='', last_name='',
-#                                nickname='', title='', company='', address='',
-#                                home_phone='', mobile_phone='', work_phone='', fax='',
-#                                email_1='', email_2='', email_3='', homepage='',
-#                                day_of_birth='-', month_of_birth='-', year_of_birth='-',
-#                                anniversary_day='-', anniversary_month='-', anniversary_year='-',
-#                                address_2='', phone_2='', notes=''))
-#     app.session.logout()
+def test_add_empty_contact(app):
+    app.session.login(username="admin", password="secret")
+    app.contact.create(Contact(first_name='', middle_name='', last_name='',
+                               nickname='', title='', company='', address='',
+                               home_phone='', mobile_phone='', work_phone='', fax='',
+                               email_1='', email_2='', email_3='', homepage='',
+                               day_of_birth='-', month_of_birth='-', year_of_birth='-',
+                               anniversary_day='-', anniversary_month='-', anniversary_year='-',
+                               address_2='', phone_2='', notes=''))
+    app.session.logout()
 
 
 def test_add_contact(app):

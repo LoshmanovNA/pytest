@@ -16,78 +16,67 @@ class ContactHelper:
         self._go_to_homepage()
 
     def delete_first_contact(self):
-        self.wd.find_element_by_name("selected[]").click()
-        self.wd.find_element_by_xpath("//input[@value='Delete']").click()
-        self.wd.switch_to_alert().accept()
+        self._select_first_contact()
+        self._click_delete_button()
+        self._accept_action_in_alert()
 
     def edit_first_contact(self, contact):
-        self.wd.find_element_by_name("selected[]").click()
-        self.wd.find_element_by_xpath("//img[@alt='Edit']]").click()
+        self._select_first_contact()
+        self._click_edit_button()
         self._fill_form(contact)
         self._update_form()
         self._go_to_homepage()
 
+    def _accept_action_in_alert(self):
+        self.wd.switch_to_alert().accept()
+
+    def _click_delete_button(self):
+        self.wd.find_element_by_xpath("//input[@value='Delete']").click()
+
+    def _click_edit_button(self):
+        self.wd.find_element_by_css_selector("#maintable a[href*='edit']").click()
+
+    def _is_select_value_present(self, field_name, value):
+        if value:
+            Select(self.wd.find_element_by_name(field_name)).select_by_visible_text(value)
+
+    def _is_text_value_present(self, field_name, value):
+        if value:
+            self.wd.find_element_by_name(field_name).clear()
+            self.wd.find_element_by_name(field_name).send_keys(value)
+
     def _fill_form(self, contact):
         # Person data
-        self.wd.find_element_by_name("firstname").clear()
-        self.wd.find_element_by_name("firstname").send_keys(contact.first_name)
-        self.wd.find_element_by_name("middlename").clear()
-        self.wd.find_element_by_name("middlename").send_keys(contact.middle_name)
-        self.wd.find_element_by_name("lastname").clear()
-        self.wd.find_element_by_name("lastname").send_keys(contact.last_name)
-        self.wd.find_element_by_name("nickname").clear()
-        self.wd.find_element_by_name("nickname").send_keys(contact.nickname)
+        self._is_text_value_present("firstname", contact.first_name)
+        self._is_text_value_present("middlename", contact.middle_name)
+        self._is_text_value_present("lastname", contact.last_name)
+        self._is_text_value_present("nickname", contact.nickname)
         # Company data
-        self.wd.find_element_by_name("title").clear()
-        self.wd.find_element_by_name("title").send_keys(contact.title)
-        self.wd.find_element_by_name("company").clear()
-        self.wd.find_element_by_name("company").send_keys(contact.company)
-        self.wd.find_element_by_name("address").clear()
-        self.wd.find_element_by_name("address").send_keys(contact.address)
+        self._is_text_value_present("title", contact.title)
+        self._is_text_value_present("company", contact.company)
+        self._is_text_value_present("address", contact.address)
         # Phone numbers
-        self.wd.find_element_by_name("home").clear()
-        self.wd.find_element_by_name("home").send_keys(contact.home_phone)
-        self.wd.find_element_by_name("mobile").clear()
-        self.wd.find_element_by_name("mobile").send_keys(contact.mobile_phone)
-        self.wd.find_element_by_name("work").clear()
-        self.wd.find_element_by_name("work").send_keys(contact.work_phone)
-        self.wd.find_element_by_name("fax").clear()
-        self.wd.find_element_by_name("fax").send_keys(contact.fax)
-        self.wd.find_element_by_name("email").clear()
-        self.wd.find_element_by_name("email").send_keys(contact.email_1)
-        self.wd.find_element_by_name("email2").clear()
-        self.wd.find_element_by_name("email2").send_keys(contact.email_2)
-        self.wd.find_element_by_name("email3").clear()
-        self.wd.find_element_by_name("email3").send_keys(contact.email_3)
-        self.wd.find_element_by_name("homepage").clear()
-        self.wd.find_element_by_name("homepage").send_keys(contact.homepage)
+        self._is_text_value_present("home", contact.home_phone)
+        self._is_text_value_present("mobile", contact.mobile_phone)
+        self._is_text_value_present("work", contact.work_phone)
+        self._is_text_value_present("fax", contact.fax)
+        self._is_text_value_present("email", contact.email_1)
+        self._is_text_value_present("email2", contact.email_2)
+        self._is_text_value_present("email3", contact.email_3)
+        self._is_text_value_present("homepage", contact.homepage)
         # Select date of birth
-        Select(self.wd.find_element_by_name("bday")).select_by_visible_text(contact.day_of_birth)
-        Select(self.wd.find_element_by_name("bmonth")).select_by_visible_text(contact.month_of_birth)
-        self.wd.find_element_by_name("byear").clear()
-        self.wd.find_element_by_name("byear").send_keys(contact.year_of_birth)
+        self._is_select_value_present("bday", contact.day_of_birth)
+        self._is_select_value_present("bmonth", contact.month_of_birth)
+        self._is_text_value_present("byear", contact.year_of_birth)
         # Select anniversary
-        Select(self.wd.find_element_by_name("aday")).select_by_visible_text(contact.anniversary_day)
-        Select(self.wd.find_element_by_name("amonth")).select_by_visible_text(contact.anniversary_month)
-        self.wd.find_element_by_name("ayear").clear()
-        self.wd.find_element_by_name("ayear").send_keys(contact.anniversary_year)
+        self._is_select_value_present("aday", contact.anniversary_day)
+        self._is_select_value_present("amonth", contact.anniversary_month)
+        self._is_text_value_present("ayear", contact.anniversary_year)
         # Second address and phone
-        self.wd.find_element_by_name("address2").clear()
-        self.wd.find_element_by_name("address2").send_keys(contact.address_2)
-        self.wd.find_element_by_name("phone2").clear()
-        self.wd.find_element_by_name("phone2").send_keys(contact.phone_2)
-        self.wd.find_element_by_name("notes").clear()
+        self._is_text_value_present("address2", contact.address_2)
+        self._is_text_value_present("phone2", contact.phone_2)
         # Notes
-        self.wd.find_element_by_name("notes").send_keys(contact.notes)
-
-    def _open_add_contact_page(self):
-        self.wd.find_element_by_link_text("add new").click()
-
-    def _submit_form(self):
-        self.wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
-
-    def _update_form(self):
-        self.wd.find_element_by_name("update").click()
+        self._is_text_value_present("notes", contact.notes)
 
     def _go_to_homepage(self):
         self.wd.find_element_by_link_text("home page").click()
@@ -97,8 +86,20 @@ class ContactHelper:
         path = os.getcwd() + img_path
         self.wd.find_element_by_name("photo").send_keys(path)
 
+    def _open_add_contact_page(self):
+        self.wd.find_element_by_link_text("add new").click()
+
+    def _submit_form(self):
+        self.wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
+
+    def _select_first_contact(self):
+        self.wd.find_element_by_name("selected[]").click()
+
     def _select_group(self):
         pass
+
+    def _update_form(self):
+        self.wd.find_element_by_name("update").click()
 
 
 # if __name__ == '__main__':

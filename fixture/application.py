@@ -2,6 +2,7 @@ from selenium import webdriver
 from fixture.session import SessionHelper
 from fixture.group import GroupHelper
 from fixture.contact import ContactHelper
+import sys
 
 
 class Application:
@@ -15,7 +16,11 @@ class Application:
 
     def open_home_page(self):
         wd = self.wd
-        wd.get("http://localhost:8080/addressbook/")
+        os = sys.platform
+        if os == "win32":
+            wd.get("http://localhost/addressbook/")
+        else:
+            wd.get("http://localhost:8080/addressbook/")
 
     def destroy(self):
         self.wd.quit()

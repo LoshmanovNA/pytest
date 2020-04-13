@@ -16,11 +16,13 @@ class ContactHelper:
         self._go_to_homepage()
 
     def delete_first_contact(self):
+        self.app.open_home_page()
         self._select_first_contact()
         self._click_delete_button()
         self._accept_action_in_alert()
 
     def edit_first_contact(self, contact):
+        self.app.open_home_page()
         self._select_first_contact()
         self._click_edit_button()
         self._fill_form(contact)

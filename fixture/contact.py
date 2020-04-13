@@ -13,16 +13,19 @@ class ContactHelper:
         self._fill_form(contact)
         self._load_image()
         self._submit_form()
-        self._go_to_homepage()
+        # self._go_to_homepage()
+
+    def count(self):
+        return len(self.wd.find_elements_by_name("selected[]"))
 
     def delete_first_contact(self):
-        self.app.open_home_page()
+        self._go_to_homepage()
         self._select_first_contact()
         self._click_delete_button()
         self._accept_action_in_alert()
 
     def edit_first_contact(self, contact):
-        self.app.open_home_page()
+        self._go_to_homepage()
         self._select_first_contact()
         self._click_edit_button()
         self._fill_form(contact)
@@ -81,7 +84,11 @@ class ContactHelper:
         self._is_text_value_present("notes", contact.notes)
 
     def _go_to_homepage(self):
-        self.wd.find_element_by_link_text("home page").click()
+        print(self.wd.current_url)
+        if not (self.wd.current_url.endswith("/index.php") and
+                self.wd.find_elements_by_css_selector("#maintable a[href*='edit']")):
+            print(True)
+            self.wd.find_element_by_partial_link_text("home").click()
 
     def _load_image(self):
         img_path = r"\media\pic.jpg" if os.getcwd().startswith(r"\/") else r"/media/pic.jpg"

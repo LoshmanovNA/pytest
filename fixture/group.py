@@ -27,6 +27,10 @@ class GroupHelper:
         self._update_group()
         self._return_to_groups_page()
 
+    def count(self):
+        self._open_groups_page()
+        return len(self.wd.find_elements_by_name("selected[]"))
+
     def _click_delete_button(self):
         self.wd.find_element_by_name("delete").click()
 

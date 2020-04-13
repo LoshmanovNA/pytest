@@ -51,7 +51,8 @@ class GroupHelper:
         self._is_value_present("group_footer", group_data.footer)
 
     def _open_groups_page(self):
-        self.wd.find_element_by_link_text("groups").click()
+        if not (self.wd.current_url.endswith("/group.php") and self.wd.find_elements_by_name("new")):
+            self.wd.find_element_by_link_text("groups").click()
 
     def _return_to_groups_page(self):
         self.wd.find_element_by_link_text("group page").click()

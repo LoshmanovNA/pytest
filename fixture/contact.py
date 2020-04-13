@@ -30,7 +30,7 @@ class ContactHelper:
         self._go_to_homepage()
 
     def _accept_action_in_alert(self):
-        self.wd.switch_to_alert().accept()
+        self.wd.switch_to.alert.accept()
 
     def _click_delete_button(self):
         self.wd.find_element_by_xpath("//input[@value='Delete']").click()

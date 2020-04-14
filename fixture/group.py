@@ -1,3 +1,4 @@
+from model.group import Group
 
 
 class GroupHelper:
@@ -30,6 +31,15 @@ class GroupHelper:
     def count(self):
         self._open_groups_page()
         return len(self.wd.find_elements_by_name("selected[]"))
+
+    def get_groups_list(self):
+        self._open_groups_page()
+        group_list = []
+        for element in self.wd.find_elements_by_css_selector("span.group"):
+            text = element.text
+            id = self.wd.find_element_by_name("selected[]").get_attribute("value")
+            group_list.append(Group(name=text, element_id=id))
+        return group_list
 
     def _click_delete_button(self):
         self.wd.find_element_by_name("delete").click()

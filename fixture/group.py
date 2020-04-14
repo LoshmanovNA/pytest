@@ -37,7 +37,7 @@ class GroupHelper:
         group_list = []
         for element in self.wd.find_elements_by_css_selector("span.group"):
             text = element.text
-            id = self.wd.find_element_by_name("selected[]").get_attribute("value")
+            id = element.find_element_by_name("selected[]").get_attribute("value")
             group_list.append(Group(name=text, element_id=id))
         return group_list
 

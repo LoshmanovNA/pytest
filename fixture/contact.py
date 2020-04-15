@@ -32,6 +32,14 @@ class ContactHelper:
         self._update_form()
         self._go_to_homepage()
 
+    contacts_cache = None
+
+    def get_contacts_list(self):
+        if self.contacts_cache is None:
+            self._go_to_homepage()
+            self.contacts_cache = []
+    """:ToDo: дописать сравнение имени фамилии и id"""
+
     def _accept_action_in_alert(self):
         self.wd.switch_to.alert.accept()
 

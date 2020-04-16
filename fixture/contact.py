@@ -1,5 +1,8 @@
 from selenium.webdriver.support.ui import Select
-import os.path
+from model.contact import Contact
+import sys
+from os import getcwd
+import time
 
 
 class ContactHelper:
@@ -13,24 +16,35 @@ class ContactHelper:
         self._fill_form(contact)
         self._load_image()
         self._submit_form()
-        # self._go_to_homepage()
+        self._go_to_homepage()
+        self.contacts_cache = None
 
     def count(self):
         return len(self.wd.find_elements_by_name("selected[]"))
 
-    def delete_first_contact(self):
+    def delete_first_contact(self, index):
+        self.delete_contact_by_index(index)
+
+    def delete_contact_by_index(self, index):
         self._go_to_homepage()
-        self._select_first_contact()
+        self._select_contact_by_index(index)
         self._click_delete_button()
         self._accept_action_in_alert()
+        self.contacts_cache = None
 
     def edit_first_contact(self, contact):
+        self.edit_contact_by_index(0, contact)
+
+    def edit_contact_by_index(self, index, contact):
         self._go_to_homepage()
-        self._select_first_contact()
+        self._select_contact_by_index(index)
         self._click_edit_button()
         self._fill_form(contact)
+        # time.sleep(3)
         self._update_form()
+        # time.sleep(3)
         self._go_to_homepage()
+        self.contacts_cache = None
 
     contacts_cache = None
 
@@ -38,7 +52,13 @@ class ContactHelper:
         if self.contacts_cache is None:
             self._go_to_homepage()
             self.contacts_cache = []
-    """:ToDo: дописать сравнение имени фамилии и id"""
+            for row in self.wd.find_elements_by_css_selector("tr"):
+                if row.get_attribute("name") == "entry":
+                    id = row.find_element_by_name("selected[]").get_attribute("value")
+                    last_name = row.find_elements_by_tag_name("td")[1].text
+                    first_name = row.find_elements_by_tag_name("td")[2].text
+                    self.contacts_cache.append(Contact(id=id, first_name=first_name, last_name=last_name))
+        return list(self.contacts_cache)
 
     def _accept_action_in_alert(self):
         self.wd.switch_to.alert.accept()
@@ -92,15 +112,14 @@ class ContactHelper:
         self._is_text_value_present("notes", contact.notes)
 
     def _go_to_homepage(self):
-        print(self.wd.current_url)
         if not (self.wd.current_url.endswith("/index.php") and
                 self.wd.find_elements_by_css_selector("#maintable a[href*='edit']")):
-            print(True)
             self.wd.find_element_by_partial_link_text("home").click()
 
     def _load_image(self):
-        img_path = r"\media\pic.jpg" if os.getcwd().startswith(r"\/") else r"/media/pic.jpg"
-        path = os.getcwd() + img_path
+        os_type = sys.platform
+        img_path = r"\test\media\pic.jpg" if os_type == "win32" else r"/test/media/pic.jpg"
+        path = getcwd() + img_path
         self.wd.find_element_by_name("photo").send_keys(path)
 
     def _open_add_contact_page(self):
@@ -109,15 +128,14 @@ class ContactHelper:
     def _submit_form(self):
         self.wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
 
-    def _select_first_contact(self):
-        self.wd.find_element_by_name("selected[]").click()
+    def _select_contact_by_index(self, index):
+        self.wd.find_elements_by_name("selected[]")[index].click()
 
     def _select_group(self):
         pass
 
     def _update_form(self):
-        self.wd.find_element_by_name("update").click()
-
+        self.wd.find_element_by_css_selector("input[value='Update']").click()
 
 # if __name__ == '__main__':
 #     print(os.getcwd() + '\media\pic.jpg')

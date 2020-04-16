@@ -25,8 +25,8 @@ class GroupHelper:
         self._return_to_groups_page()
         self.group_cache = None
 
-    def edit_first_group(self):
-        self.edit_group_by_index(0)
+    def edit_first_group(self, group_data):
+        self.edit_group_by_index(0, group_data)
 
     def edit_group_by_index(self, index, group_data):
         self._open_groups_page()

@@ -12,6 +12,8 @@ class Contact:
                  title=None,
                  company=None,
                  address=None,
+                 all_emails_from_home_page=None,
+                 all_phones_from_home_page=None,
                  home_phone=None,
                  mobile_phone=None,
                  work_phone=None,
@@ -38,6 +40,8 @@ class Contact:
         self.title = title
         self.company = company
         self.address = address
+        self.all_emails_from_home_page = all_emails_from_home_page
+        self.all_phones_from_home_page = all_phones_from_home_page
         self.home_phone = home_phone
         self.mobile_phone = mobile_phone
         self.work_phone = work_phone

@@ -45,7 +45,6 @@ class ContactHelper:
         # time.sleep(3)
         self._go_to_homepage()
         self.contacts_cache = None
-
     contacts_cache = None
 
     def get_contacts_list(self):

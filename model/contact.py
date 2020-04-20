@@ -61,7 +61,8 @@ class Contact:
         self.notes = notes
 
     def __repr__(self):
-        return f"{self.id} : {self.last_name}, {self.first_name}"
+        return f"id: {self.id}; last name: {self.last_name}; first name: {self.first_name}; home phone: {self.home_phone}; " \
+               f"mobile phone: {self.mobile_phone}; work phone: {self.work_phone}; phone 2: {self.phone_2}"
 
     def __eq__(self, other):
         return (self.id is None or other.id is None or self.id == other.id) and \

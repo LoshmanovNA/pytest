@@ -88,6 +88,7 @@ class ContactHelper:
     def get_contact_from_view_page(self, index):
         self.open_contact_view_by_index(index)
         text = self.wd.find_element_by_id("content").text
+        print(text)
         home_phone = re.search("H: (.*)", text).group(1)
         work_phone = re.search("W: (.*)", text).group(1)
         mobile_phone = re.search("M: (.*)", text).group(1)

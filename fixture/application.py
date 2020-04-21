@@ -7,8 +7,15 @@ import sys
 
 class Application:
 
-    def __init__(self):
-        self.wd = webdriver.Chrome()
+    def __init__(self, browser):
+        if browser == "chrome":
+            self.wd = webdriver.Chrome()
+        elif browser == "firefox":
+            self.wd = webdriver.Firefox()
+        elif browser == "ie":
+            self.wd = webdriver.Ie()
+        else:
+            raise ValueError(f"Unrecognized browser {browser}")
         self.session = SessionHelper(self)
         self.group = GroupHelper(self)
         self.contact = ContactHelper(self)

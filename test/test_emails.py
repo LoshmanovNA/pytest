@@ -7,4 +7,5 @@ def test_emails_on_home_page(app):
 
 
 def merge_emails_like_on_home_page(contact):
-    return "\n".join(filter(lambda x: x is not None and x != "", [contact.email_1, contact.email_2, contact.email_3]))
+    return "\n".join(filter(lambda x: x is not None and x != "",
+                            [contact.email_1, contact.email_2, contact.email_3]))

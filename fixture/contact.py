@@ -1,7 +1,7 @@
 from selenium.webdriver.support.ui import Select
 from model.contact import Contact
 import sys
-from os import getcwd
+import os
 import re
 
 
@@ -168,12 +168,12 @@ class ContactHelper:
         os_type = sys.platform
         try:
             img_path = r"\test\media\pic.jpg" if os_type == "win32" else r"/test/media/pic.jpg"
-            path = getcwd() + img_path
+            path = os.getcwd() + img_path
             self.wd.find_element_by_name("photo").send_keys(path)
             return
         except:
             img_path = r"\media\pic.jpg" if os_type == "win32" else r"/media/pic.jpg"
-            path = getcwd() + img_path
+            path = os.getcwd() + img_path
             self.wd.find_element_by_name("photo").send_keys(path)
 
     def _open_add_contact_page(self):

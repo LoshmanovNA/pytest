@@ -1,5 +1,3 @@
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 
 
 class SessionHelper:
@@ -28,7 +26,7 @@ class SessionHelper:
 
     def login(self, username, password):
         self.app.open_home_page()
-        self.wd.implicitly_wait(10)
+        self.wd.implicitly_wait(5)
         self.wd.find_element_by_name("user").clear()
         self.wd.find_element_by_name("user").send_keys(username)
         self.wd.find_element_by_name("pass").click()

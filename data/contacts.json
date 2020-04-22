@@ -1,0 +1,32 @@
+[
+  {
+    "py/object": "model.contact.Contact",
+    "id": null,
+    "first_name": "8R{",
+    "middle_name": null,
+    "last_name": "rP{Xl5 ",
+    "nickname": null,
+    "title": null,
+    "company": null,
+    "address": null,
+    "all_emails_from_home_page": null,
+    "all_phones_from_home_page": null,
+    "home_phone": "-2",
+    "mobile_phone": "2 ",
+    "work_phone": "224",
+    "fax": null,
+    "email_1": null,
+    "email_2": null,
+    "email_3": null,
+    "homepage": null,
+    "day_of_birth": null,
+    "month_of_birth": null,
+    "year_of_birth": null,
+    "anniversary_day": null,
+    "anniversary_month": null,
+    "anniversary_year": null,
+    "address_2": null,
+    "phone_2": "984",
+    "notes": null
+  }
+]

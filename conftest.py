@@ -1,5 +1,6 @@
-import pytest
 from fixture.application import Application
+from fixture.db import DbFixture
+import pytest
 import json
 import jsonpickle
 import os.path
@@ -10,23 +11,42 @@ fixture = None
 config = None
 
 
-@pytest.fixture()
-def app(request):
-    global fixture
+def load_config(file):
     global config
-    browser = request.config.getoption("--browser")
     if config is None:
-        config_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), request.config.getoption("--config"))
+        config_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), file)
         with open(config_file) as file:
             config = json.load(file)
+    return config
+
+
+@pytest.fixture
+def app(request):
+    global fixture
+    browser = request.config.getoption("--browser")
+    web_config = load_config(request.config.getoption("--config"))['web']
     if fixture is None or not fixture.is_valid():
         fixture = Application(browser=browser)
-    fixture.session.ensure_login(username=config["username"], password=config["password"])
+    fixture.session.ensure_login(username=web_config["username"], password=web_config["password"])
     return fixture
+
+
+@pytest.fixture(scope="session")
+def db(request):
+    db_config = load_config(request.config.getoption("--config"))['db']
+    db_fixture = DbFixture(host=db_config['host'], name=db_config['name'],
+                           user=db_config['user'], password=db_config['password'])
+
+    def fin():
+        db_fixture.destroy()
+
+    request.addfinalizer(fin)
+    return db_fixture
 
 
 @pytest.fixture(scope="session", autouse=True)
 def stop(request):
+
     def fin():
         fixture.session.ensure_logout()
         fixture.destroy()
@@ -35,9 +55,15 @@ def stop(request):
     return fixture
 
 
+@pytest.fixture
+def check_ui(request):
+    return request.config.getoption("--check_ui")
+
+
 def pytest_addoption(parser):
     parser.addoption("--browser", action="store", default="chrome")
     parser.addoption("--config", action="store", default="config.json")
+    parser.addoption("--check_ui", action="store_true")
 
 
 def pytest_generate_tests(metafunc):

@@ -1,4 +1,12 @@
 {
-  "username": "admin",
-  "password": "secret"
+  "web": {
+    "username": "admin",
+    "password": "secret"
+  },
+  "db": {
+    "host": "localhost",
+    "name": "addressbook",
+    "user": "root",
+    "password": ""
+  }
 }

@@ -44,6 +44,15 @@ class GroupHelper:
         self._return_to_groups_page()
         self.group_cache = None
 
+    def edit_group_by_id(self, group_id, group_data):
+        self._open_groups_page()
+        self._select_group_by_id(group_id)
+        self._click_edit_button()
+        self._fill_group_form(group_data)
+        self._update_group()
+        self._return_to_groups_page()
+        self.group_cache = None
+
     def count(self):
         self._open_groups_page()
         return len(self.wd.find_elements_by_name("selected[]"))

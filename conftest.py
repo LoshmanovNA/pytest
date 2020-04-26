@@ -4,6 +4,7 @@ import pytest
 import json
 import jsonpickle
 import os.path
+import sys
 import importlib
 
 
@@ -13,11 +14,12 @@ config = None
 
 def load_config(file):
     global config
+    system = sys.platform
     if config is None:
         config_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), file)
         with open(config_file) as file:
             config = json.load(file)
-    return config
+    return config['win'] if system == "win32" else config['mac']
 
 
 @pytest.fixture
@@ -25,8 +27,9 @@ def app(request):
     global fixture
     browser = request.config.getoption("--browser")
     web_config = load_config(request.config.getoption("--config"))['web']
+    url = load_config(request.config.getoption("--config"))['url']
     if fixture is None or not fixture.is_valid():
-        fixture = Application(browser=browser)
+        fixture = Application(browser=browser, url=url)
     fixture.session.ensure_login(username=web_config["username"], password=web_config["password"])
     return fixture
 

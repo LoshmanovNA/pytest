@@ -25,15 +25,14 @@ for o, a in opts:
 
 def random_string(maxlen, is_only_digits=False):
     digits = string.digits + " ()-"
-    symbols = string.ascii_letters + string.digits + string.punctuation + " "*10
+    symbols = string.ascii_letters + string.digits + " "*10
     result_string = "".join([random.choice(digits) for i in range(random.randrange(maxlen))]) \
         if is_only_digits \
         else "".join([random.choice(symbols) for i in range(random.randrange(maxlen))])
     return result_string
 
 
-test_data = [Contact(first_name="", last_name="", mobile_phone="",
-                     home_phone="", work_phone="", phone_2="")] + [
+test_data = [
     Contact(first_name=random_string(10), last_name=random_string(10),
             mobile_phone=random_string(7, is_only_digits=True),
             home_phone=random_string(7, is_only_digits=True),

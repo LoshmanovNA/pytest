@@ -32,12 +32,30 @@ class ContactHelper:
         self._accept_action_in_alert()
         self.contacts_cache = None
 
+    def delete_contact_by_id(self, id):
+        self._go_to_homepage()
+        self._select_contact_by_id(id)
+        self._click_delete_button()
+        self._accept_action_in_alert()
+        self.contacts_cache = None
+
     def edit_first_contact(self, contact):
         self.edit_contact_by_index(0, contact)
 
     def edit_contact_by_index(self, index, contact):
         self._go_to_homepage()
         self._select_contact_by_index(index)
+        self._click_edit_button()
+        self._fill_form(contact)
+        # time.sleep(3)
+        self._update_form()
+        # time.sleep(3)
+        self._go_to_homepage()
+        self.contacts_cache = None
+
+    def edit_contact_by_id(self, id, contact):
+        self._go_to_homepage()
+        self._select_contact_by_id(id)
         self._click_edit_button()
         self._fill_form(contact)
         # time.sleep(3)
@@ -185,6 +203,9 @@ class ContactHelper:
 
     def _select_contact_by_index(self, index):
         self.wd.find_elements_by_name("selected[]")[index].click()
+
+    def _select_contact_by_id(self, id):
+        self.wd.find_element_by_css_selector(f"input[value='{id}']").click()
 
     def _select_group(self):
         pass

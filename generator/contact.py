@@ -34,6 +34,8 @@ def random_string(maxlen, is_only_digits=False):
 
 test_data = [
     Contact(first_name=random_string(10), last_name=random_string(10),
+            address=random_string(20), email_1=random_string(10),
+            email_2=random_string(10), email_3=random_string(10),
             mobile_phone=random_string(7, is_only_digits=True),
             home_phone=random_string(7, is_only_digits=True),
             work_phone=random_string(7, is_only_digits=True),

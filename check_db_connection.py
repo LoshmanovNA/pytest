@@ -1,15 +1,15 @@
 import pymysql.cursors
+from fixture.orm import ORMFixture
 
-connection = pymysql.connect(host='192.168.64.2',
-                             database='addressbook',
-                             user='admin',
-                             password='admin')
+db = ORMFixture(host='192.168.64.2',
+                name='addressbook',
+                user='admin',
+                password='admin')
 
 try:
-    cursor = connection.cursor()
-    cursor.execute("select firstname, lastname, home, mobile, work, phone2 "
-                   "from addressbook where deprecated='0000-00-00 00:00:00'")
-    for row in cursor.fetchall():
-        print(row)
+    l = db.get_contact_list()
+    for i in range(len(l)):
+        print(l[i].address)
+    print(len(l))
 finally:
-    connection.close()
+    pass # db.destroy()

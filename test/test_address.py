@@ -1,6 +1,9 @@
+from model.contact import Contact
 
 
-def test_address_on_home_page(app):
-    contact_from_home_page = app.contact.get_contacts_list()[0]
-    contact_from_edit_page = app.contact.get_contact_info_from_edit_page(0)
-    assert contact_from_home_page.address == contact_from_edit_page.address
+def test_address_on_home_page(app, orm):
+    contacts_from_home_page = sorted(app.contact.get_contacts_list(), key=Contact.id_or_max)
+    contacts_from_db = sorted(orm.get_contact_list(), key=Contact.id_or_max)
+
+    for i in range(len(contacts_from_db)):
+        assert contacts_from_db[i].address.strip() == contacts_from_home_page[i].address.strip()

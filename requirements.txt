@@ -2,6 +2,6 @@ jsonpickle==1.4.1
 mysql-connector-python==8.0.19
 pony==0.7.13
 PyMySQL==0.9.3
-pytest==5.4.1
+pytest
 selenium==3.141.0
 

@@ -1,29 +1,14 @@
 {
-  "win": {
-    "db": {
-      "host": "localhost",
-      "name": "addressbook",
-      "user": "root",
-      "password": ""
-      },
-    "url": "http://localhost/addressbook/",
-    "web": {
-      "username": "admin",
-      "password": "secret"
-    }
+  "db": {
+    "host": "192.168.64.2",
+    "name": "addressbook",
+    "user": "admin",
+    "password": "admin"
   },
-  "mac": {
-    "db": {
-      "host": "192.168.64.2",
-      "name": "addressbook",
-      "user": "admin",
-      "password": "admin"
-    },
-    "url": "http://localhost:8080/addressbook/",
-    "web": {
-      "username": "admin",
-      "password": "secret"
-    }
+  "url": "http://192.168.64.2/addressbook/",
+  "web": {
+    "username": "admin",
+    "password": "secret"
   }
 }
 

@@ -1,0 +1,34 @@
+version: '3'
+services:
+  selenoid:
+    image: "aerokube/selenoid"
+    network_mode: bridge
+    ports:
+      - "4444:4444"
+    volumes:
+      - "$PWD/selenoid:/etc/selenoid/" # assumed current dir contains browsers.json
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "$PWD/selenoid/video:/opt/selenoid/video"
+      - "$PWD/selenoid/logs:/opt/selenoid/logs"
+    environment:
+      - "OVERRIDE_VIDEO_OUTPUT_DIR=$PWD/selenoid/video/"
+    command: -listen :4444 -conf /etc/selenoid/browsers.json -limit 2 -disable-queue -session-attempt-timeout 120s -session-delete-timeout 120s -timeout 120s -video-output-dir /opt/selenoid/video/
+  selenoid-ui:
+    image: "aerokube/selenoid-ui:latest"
+    network_mode: bridge
+    links:
+      - selenoid
+    ports:
+      - "8080:8080"
+    command: ["--selenoid-uri", "http://selenoid:4444"]
+  jenkins:
+    image: 'docker.io/bitnami/jenkins:2-debian-10'
+    ports:
+      - '80:8080'
+      - '443:8443'
+      - '50000:50000'
+    volumes:
+      - 'jenkins_data:/bitnami/jenkins'
+volumes:
+  jenkins_data:
+    driver: local

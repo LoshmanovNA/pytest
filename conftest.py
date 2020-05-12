@@ -15,12 +15,11 @@ config = None
 
 def load_config(file):
     global config
-    system = sys.platform
     if config is None:
         config_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), file)
         with open(config_file) as file:
             config = json.load(file)
-    return config['win'] if system == "win32" else config['mac']
+    return config
 
 
 @pytest.fixture
